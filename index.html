@@ -1,0 +1,1854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="Piemaker — Handcrafted artisan pies made fresh daily. Order online for delivery or pickup."/>
+<meta property="og:title" content="Piemaker — Artisan Pies"/>
+<meta property="og:description" content="Handcrafted artisan pies made fresh daily with all-natural ingredients."/>
+<meta property="og:type" content="website"/>
+<title>Piemaker — Artisan Pies</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@200;300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+:root{
+  --bg:#163827;
+  --accent:#e8522a;
+  --text:#000;
+  --muted:#000;
+  --dim:#000;
+  --border:rgba(0,0,0,.18);
+  --fd:'Cormorant Garamond',serif;
+  --fb:'DM Sans',sans-serif;
+  --arc-h:200px;
+}
+body{
+  font-family:var(--fb);
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  display:grid;
+  grid-template-rows:auto 1fr auto;
+  transition:background 1s ease;
+  position:relative;
+  overflow-x:hidden;
+}
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.045'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;
+}
+
+
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media(max-width:768px){
+  #pm-dot, #pm-ring{display:none;}
+  * { cursor: auto !important; }
+}
+
+/* ── FLOATING PARTICLES ── */
+.floats{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden;}
+.fi{
+  position:absolute;
+  font-size:1.6rem;
+  color:#000;
+  animation:floatUp 14s linear infinite;
+}
+@keyframes floatUp{
+  0%{transform:translateY(105vh) rotate(0deg);opacity:0;}
+  8%{opacity:.55;}
+  92%{opacity:.55;}
+  100%{transform:translateY(-80px) rotate(300deg);opacity:0;}
+}
+
+/* ── SIDE LABEL ── */
+.side-brand{
+  position:fixed;
+  top:50%;left:20px;
+  transform:translateY(-50%) rotate(-90deg);
+  transform-origin:center center;
+  z-index:30;pointer-events:none;
+  font-family:var(--fd);font-size:.75rem;font-weight:300;
+  letter-spacing:.45em;color:rgba(0,0,0,.45);
+  text-transform:uppercase;white-space:nowrap;
+}
+
+/* ── HEADER ── */
+header{
+  position:relative;z-index:20;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:22px 52px;
+  border-bottom:1px solid var(--border);
+  flex-shrink:0;
+  backdrop-filter:blur(8px);
+}
+.h-left{display:flex;align-items:center;gap:20px}
+.hamburger{
+  background:none;border:1px solid var(--border);
+  border-radius:8px;cursor:pointer;
+  display:flex;flex-direction:column;gap:5px;
+  padding:8px 9px;transition:border-color .25s,background .25s;
+}
+.hamburger span{
+  display:block;width:18px;height:1.5px;
+  background:#000;border-radius:2px;
+  transition:transform .35s, opacity .35s;
+}
+.hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+.hamburger:hover{border-color:rgba(0,0,0,.35);background:rgba(0,0,0,.06)}
+.logo-wrap{display:flex;flex-direction:column;line-height:1}
+.logo-main{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:600;letter-spacing:.04em;color:#000}
+.logo-sub{font-size:.52rem;font-weight:300;letter-spacing:.38em;color:var(--muted);text-transform:uppercase;margin-top:2px}
+.h-center{
+  position:absolute;left:50%;transform:translateX(-50%);
+  display:flex;align-items:center;gap:28px;
+}
+.hnav a{
+  position: relative;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  transition: color .3s ease;
+}
+.hnav a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0%;
+  height: 1.5px;
+  background-color: #942f2f;
+  transition: width 0.3s ease;
+}
+.hnav a:hover {
+  color: #942f2f;
+}
+.hnav a:hover::after {
+  width: 100%;
+}
+.h-right{display:flex;align-items:center;gap:8px}
+.ibtn{
+  background:none;border:1px solid var(--border);
+  border-radius:8px;cursor:pointer;
+  color:var(--muted);padding:8px 10px;
+  transition:color .3s,background .3s,border-color .3s;
+  position:relative;display:flex;align-items:center;justify-content:center;
+}
+.ibtn:hover{color:#000;background:rgba(0,0,0,.07);border-color:rgba(0,0,0,.28)}
+.ibtn svg{display:block}
+.badge{
+  position:absolute;top:-5px;right:-5px;
+  background:var(--accent);color:#fff;
+  font-size:.5rem;font-weight:500;
+  width:16px;height:16px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--fb);transition:transform .25s,opacity .25s;
+  border:2px solid var(--bg);
+  opacity:0;
+}
+.badge.visible{opacity:1}
+.badge.pop{transform:scale(1.5)}
+
+/* ── NAV DRAWER ── */
+.nav-drawer{
+  position:fixed;top:0;left:0;
+  width:280px;height:100vh;
+  background:rgba(245,245,245,.97);
+  backdrop-filter:blur(20px);
+  border-right:1px solid var(--border);
+  z-index:200;
+  transform:translateX(-100%);
+  transition:transform .4s cubic-bezier(.4,0,.2,1);
+  display:flex;flex-direction:column;
+  padding:32px 28px;
+}
+.nav-drawer.open{transform:translateX(0)}
+.drawer-logo{
+  font-family:var(--fd);font-size:1.4rem;font-weight:400;
+  color:#000;margin-bottom:8px;
+}
+.drawer-sub{
+  font-size:.52rem;letter-spacing:.35em;color:var(--muted);
+  text-transform:uppercase;margin-bottom:40px;
+}
+.drawer-nav{display:flex;flex-direction:column;gap:4px;flex:1}
+.drawer-nav a{
+  color:var(--muted);text-decoration:none;
+  font-size:.85rem;font-weight:300;letter-spacing:.08em;
+  padding:11px 0;border-bottom:1px solid var(--border);
+  transition:color .25s,padding-left .25s;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.drawer-nav a:hover{color:#000;padding-left:6px}
+.drawer-nav a svg{opacity:.4}
+.drawer-footer{
+  font-size:.55rem;color:var(--dim);letter-spacing:.1em;
+  text-transform:uppercase;margin-top:24px;
+}
+.drawer-social{display:flex;gap:12px;margin-top:12px}
+.drawer-social a{
+  color:var(--muted);font-size:.6rem;letter-spacing:.12em;
+  text-decoration:none;transition:color .25s;
+}
+.drawer-social a:hover{color:#000}
+.overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.5);
+  z-index:190;opacity:0;pointer-events:none;
+  transition:opacity .35s;
+}
+.overlay.show{opacity:1;pointer-events:all}
+
+/* ── MAIN ── */
+main{
+  position:relative;z-index:2;
+  display:flex;flex-direction:column;
+  align-items:center;
+  padding:0;overflow:hidden;
+}
+
+/* ── ARC ── */
+.arc-section{
+  width:100%;
+  display:flex;justify-content:center;align-items:flex-end;
+  padding-top:0px;
+  margin-top:-60px;
+  flex-shrink:0;
+  position:relative;
+  z-index:10;
+}
+.arcsvg{
+  width:100%;max-width:900px;
+  height:var(--arc-h);
+  overflow:visible;display:block;
+}
+.atrack{stroke:rgba(0,0,0,.15);stroke-width:1;fill:none}
+.atrack2{stroke:rgba(0,0,0,.08);stroke-width:1;fill:none}
+.albl{
+  font-family:var(--fb);font-size:10px;font-weight:600;
+  letter-spacing:.22em;fill:#000;
+  cursor:pointer;text-transform:uppercase;
+}
+.albl:hover{fill:#000}
+.albl.on{fill:#000;font-weight:500}
+.albl-underline{
+  stroke:#c8860a;stroke-width:1.5;
+  stroke-linecap:round;
+  opacity:0;
+  transition:opacity .3s;
+}
+.albl-underline.on{opacity:1;}
+.adot{
+  fill:var(--accent);
+  filter:drop-shadow(0 0 6px var(--accent));
+  transition:cx .6s cubic-bezier(.4,0,.2,1),cy .6s cubic-bezier(.4,0,.2,1);
+}
+
+/* ── STAGE ── */
+.stage{
+  width:100%;flex:1;position:relative;
+  display:flex;align-items:center;justify-content:center;
+  padding:20px 0 0;min-height:260px;
+}
+.glow{
+  position:absolute;
+  width:min(520px,75vw);height:min(520px,75vw);
+  border-radius:50%;
+  background:rgba(220,60,60,.22);
+  filter:blur(90px);
+  transition:background 1s;
+  z-index:0;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+}
+
+/* ── CAROUSEL ── */
+.carousel{
+  position:relative;z-index:1;width:100%;
+  height:min(380px,55vw);
+  display:flex;align-items:flex-end;justify-content:center;
+  overflow:visible;
+}
+.c-item{
+  position:absolute;bottom:0;
+  display:flex;align-items:flex-end;justify-content:center;
+  transition:transform .55s cubic-bezier(.4,0,.2,1),
+             opacity .55s cubic-bezier(.4,0,.2,1),
+             filter .55s cubic-bezier(.4,0,.2,1);
+  cursor:pointer;
+}
+.c-item img{
+  width:min(540px,86vw);height:min(540px,86vw);
+  object-fit:cover;border-radius:50%;
+  margin-bottom:-30%;display:block;
+  filter:drop-shadow(0 -18px 50px rgba(0,0,0,.55));
+}
+/* shimmer placeholder while image loads */
+.c-item img:not([src]){
+  background:linear-gradient(90deg,rgba(0,0,0,.05) 25%,rgba(0,0,0,.1) 50%,rgba(0,0,0,.05) 75%);
+  background-size:200% 100%;
+  animation:shimmer 1.5s infinite;
+}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.c-item.pos-0{transform:translateX(0) scale(1);opacity:1;filter:none;cursor:default;z-index:3;}
+.c-item.pos-1{transform:translateX(62%) scale(.42);opacity:.35;filter:blur(1.5px);z-index:2;pointer-events:none;}
+.c-item.pos--1{transform:translateX(-62%) scale(.42);opacity:.35;filter:blur(1.5px);z-index:2;pointer-events:none;}
+.c-item.pos-2,.c-item.pos-3{transform:translateX(105%) scale(.25);opacity:.08;filter:blur(4px);z-index:1;pointer-events:none;}
+.c-item.pos--2,.c-item.pos--3{transform:translateX(-105%) scale(.25);opacity:.08;filter:blur(4px);z-index:1;pointer-events:none;}
+.c-arrow{
+  position:absolute;top:42%;z-index:10;
+  transform:translateY(-50%);
+  background:rgba(0,0,0,.08);
+  border:1px solid var(--border);
+  border-radius:50%;width:54px;height:54px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;color:var(--muted);
+  transition:background .25s,color .25s,border-color .25s;
+}
+.c-arrow:hover{background:rgba(0,0,0,.18);color:#000;border-color:rgba(0,0,0,.3)}
+.c-arrow.left{left:80px}
+.c-arrow.right{right:80px}
+
+@media(max-width:768px){
+  .c-arrow{display:none;}
+}
+
+/* ── DELIVERY STRIP ── */
+.dstrip{
+  width:100%;
+  display:flex;justify-content:center;gap:32px;
+  padding:14px 0 0;
+  flex-wrap:wrap;
+}
+.dtag{
+  display:flex;align-items:center;gap:7px;
+  font-size:.6rem;font-weight:300;letter-spacing:.12em;
+  color:var(--muted);text-transform:uppercase;
+}
+.dtag span{font-size:.95rem}
+
+/* ── INFO BAR ── */
+.info-bar{
+  width:100%;max-width:100%;
+  padding:20px 150px 0px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:28px;
+  flex-shrink:0;
+  position:relative;
+}
+.pmeta{
+  flex:1;
+  min-width:0;
+  max-width: 340px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 16px 20px;
+  border-radius: 12px;
+}
+.pname{
+  font-family:var(--fd);
+  font-size:clamp(1.4rem,2.5vw,2.2rem);
+  font-weight:400;line-height:1.05;
+  transition:opacity .4s,transform .4s;
+}
+.pname.out{opacity:0;transform:translateY(8px)}
+.pdesc{
+  font-family:var(--fd);font-style:italic;
+  font-weight:500;font-size:.85em;
+  color:var(--muted);margin-top:3px;
+  transition:opacity .4s;
+  line-height:1.4;
+}
+.pdesc.out{opacity:0}
+.ptags{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap}
+.ptag{
+  font-size:.48rem;letter-spacing:.14em;font-weight:500;
+  color:var(--dim);text-transform:uppercase;
+  border:1px solid var(--border);
+  border-radius:100px;padding:2px 9px;
+}
+
+/* size */
+.sizeblock{text-align:center;flex-shrink:0;position:absolute;left:50%;transform:translateX(-50%);}
+.sizelbl{
+  font-size:.48rem;letter-spacing:.28em;color:var(--dim);
+  margin-bottom:8px;font-weight:300;text-transform:uppercase;
+}
+.sizes{display:flex;gap:7px;justify-content:center}
+.sbtn{
+  width:36px;height:36px;border-radius:50%;
+  border:1px solid var(--border);
+  background:rgba(0,0,0,.07);
+  color:var(--muted);font-family:var(--fb);
+  font-size:.68rem;font-weight:300;cursor:pointer;
+  transition:all .25s;
+}
+.sbtn:hover{border-color:rgba(0,0,0,.35);color:#000;background:rgba(0,0,0,.1)}
+.sbtn.on{background:rgba(0,0,0,.85);color:#fff;border-color:transparent;font-weight:500}
+
+/* price+add */
+.priceblock{
+  display:flex;flex-direction:column;
+  align-items:flex-end;gap:10px;flex-shrink:0;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 16px 20px;
+  border-radius: 12px;
+}
+.price{
+  font-family:var(--fd);
+  font-size:clamp(1.4rem,2.4vw,2.2rem);
+  font-weight:300;letter-spacing:.02em;
+  transition:opacity .3s;
+}
+.price.out{opacity:0}
+
+/* qty + add row */
+.buy-row{display:flex;align-items:center;gap:10px}
+.qty{
+  display:flex;align-items:center;gap:0;
+  border:1px solid var(--border);border-radius:100px;
+  overflow:hidden;
+}
+.qbtn{
+  background:none;border:none;color:var(--muted);
+  width:32px;height:36px;cursor:pointer;
+  font-size:1rem;font-weight:300;
+  transition:color .2s,background .2s;
+  display:flex;align-items:center;justify-content:center;
+}
+.qbtn:hover{color:#000;background:rgba(0,0,0,.08)}
+.qval{
+  font-size:.75rem;font-weight:400;
+  min-width:26px;text-align:center;
+  color:#000;
+}
+.addbtn{
+  display:flex;align-items:center;gap:9px;
+  padding:10px 20px;border-radius:100px;
+  background:var(--accent);border:none;color:#fff;
+  cursor:pointer;font-family:var(--fb);
+  font-size:.7rem;font-weight:400;letter-spacing:.12em;
+  text-transform:uppercase;
+  transition:background .3s,transform .2s,box-shadow .3s;
+  box-shadow:0 6px 24px rgba(232,82,42,.4);
+  white-space:nowrap;
+}
+.addbtn:hover{background:#ff6b3d;transform:translateY(-1px);box-shadow:0 10px 32px rgba(232,82,42,.6)}
+.addbtn:active{transform:scale(.95)}
+.addbtn svg{flex-shrink:0}
+
+/* ── REVIEWS ROW ── */
+.reviews-row{
+  display:flex;align-items:center;gap:10px;
+  margin-top:8px;
+}
+.stars{color:#000;font-size:.85rem;letter-spacing:1px}
+.rcount{
+  font-size:.6rem;font-weight:300;letter-spacing:.1em;
+  color:var(--muted);
+}
+
+/* ── ACTION ROW ── */
+.actrow{
+  width:100%;
+  padding:12px 52px 12px;
+  display:flex;justify-content:space-between;
+  align-items:center;
+  border-bottom:1px solid var(--border);
+  flex-shrink:0;
+}
+.tbtn{
+  background:none;border:none;color:var(--dim);
+  font-family:var(--fb);font-size:.58rem;
+  font-weight:300;letter-spacing:.22em;cursor:pointer;
+  transition:color .3s;padding:3px 0;
+  text-transform:uppercase;
+  display:flex;align-items:center;gap:6px;
+}
+.tbtn:hover{color:var(--muted)}
+
+/* ── TOPPING MODAL ── */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.7);
+  backdrop-filter:blur(8px);
+  z-index:300;display:flex;align-items:flex-end;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .3s;
+}
+.modal-overlay.show{opacity:1;pointer-events:all}
+.modal{
+  width:100%;max-width:540px;
+  background:rgba(255,255,255,0.97);
+  border:1px solid var(--border);
+  border-radius:20px 20px 0 0;
+  padding:28px 28px 40px;
+  transform:translateY(30px);
+  transition:transform .35s cubic-bezier(.4,0,.2,1);
+}
+.modal-overlay.show .modal{transform:translateY(0)}
+.modal-title{
+  font-family:var(--fd);font-size:1.4rem;font-weight:400;
+  margin-bottom:6px;
+}
+.modal-sub{
+  font-size:.62rem;font-weight:300;letter-spacing:.1em;
+  color:var(--muted);margin-bottom:20px;text-transform:uppercase;
+}
+.toppings-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:10px;margin-bottom:24px;
+}
+.topping-item{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 14px;border-radius:10px;
+  border:1px solid var(--border);
+  background:rgba(0,0,0,.04);
+  cursor:pointer;transition:all .2s;
+}
+.topping-item:hover{border-color:rgba(0,0,0,.28);background:rgba(0,0,0,.08)}
+.topping-item.selected{border-color:var(--accent);background:rgba(232,82,42,.1)}
+.topping-emoji{font-size:1.3rem}
+.topping-name{font-size:.72rem;font-weight:400;color:#000}
+.topping-price{font-size:.58rem;color:var(--muted);font-weight:300}
+.modal-close{
+  width:100%;padding:12px;border-radius:100px;
+  background:var(--accent);border:none;color:#fff;
+  font-family:var(--fb);font-size:.72rem;font-weight:400;
+  letter-spacing:.12em;text-transform:uppercase;
+  cursor:pointer;transition:background .25s;
+}
+.modal-close:hover{background:#ff6b3d}
+
+/* ── MOBILE STRIP ── */
+.mstrip{
+  display:none;gap:7px;overflow-x:auto;
+  padding:14px 20px;scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;flex-shrink:0;width:100%;
+}
+.mstrip::-webkit-scrollbar{display:none}
+.fpill{
+  flex-shrink:0;padding:7px 16px;
+  border-radius:100px;border:1px solid var(--border);
+  background:rgba(0,0,0,.06);
+  color:var(--dim);font-family:var(--fb);
+  font-size:.6rem;font-weight:300;
+  letter-spacing:.18em;text-transform:uppercase;
+  cursor:pointer;transition:all .25s;white-space:nowrap;
+}
+.fpill:hover{color:var(--muted);border-color:rgba(0,0,0,.28)}
+.fpill.on{background:rgba(0,0,0,.14);color:#000;border-color:rgba(0,0,0,.42);font-weight:400}
+
+/* ── TOAST ── */
+.toast{
+  position:fixed;bottom:36px;left:50%;
+  transform:translateX(-50%) translateY(16px);
+  background:rgba(20,20,20,.95);
+  backdrop-filter:blur(14px);color:#fff;
+  font-family:var(--fb);font-size:.73rem;font-weight:400;
+  letter-spacing:.06em;padding:11px 28px;
+  border-radius:100px;opacity:0;pointer-events:none;
+  z-index:400;transition:opacity .3s,transform .3s;
+  border:1px solid var(--border);
+  box-shadow:0 8px 32px rgba(0,0,0,.5);white-space:nowrap;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast-dot{
+  display:inline-block;width:6px;height:6px;
+  background:var(--accent);border-radius:50%;
+  margin-right:8px;vertical-align:middle;
+}
+
+/* ── TABLET ── */
+@media(max-width:860px){
+  :root{--arc-h:170px}
+  header{padding:20px 28px}
+  .h-center{display:none}
+  .info-bar{padding:16px 28px 12px;gap:16px}
+  .actrow{padding:10px 28px}
+  .side-brand{display:none}
+}
+
+/* ── MOBILE ── */
+@media(max-width:680px){
+  :root{--arc-h:0px}
+  header{padding:15px 18px}
+  .logo-main{font-size:1.1rem}
+  .arc-section{display:none}
+  .mstrip{display:flex}
+  .info-bar{
+    flex-wrap:wrap;
+    padding:14px 18px 10px;gap:12px;
+  }
+  .sizeblock{position:static;transform:none;margin:0;text-align:left;}
+  .pmeta{width:100%;flex:none;}
+  .sizeblock{position:static !important;transform:none !important;margin:0;text-align:left;}
+  .priceblock{align-items:flex-start}
+  .buy-row{flex-wrap:wrap}
+  .addbtn{padding:10px 18px;font-size:.68rem}
+  .actrow{padding:8px 18px;flex-wrap:wrap;gap:8px}
+  .carousel{height:min(260px,62vw); margin-top: 40px; }
+  .c-item.pos-1{transform:translateX(58%) scale(.52);opacity:.3;pointer-events:none;}
+  .c-item.pos--1{transform:translateX(-58%) scale(.52);opacity:.3;pointer-events:none;}
+  .c-arrow{display:flex}
+  .dstrip{gap:16px;padding:12px 18px 0}
+  .side-brand{display:none}
+  .toppings-grid{grid-template-columns:1fr}
+  .c-item img{
+  margin-bottom:-1%;
+  margin-top: 60px;}
+}
+@media(max-width:400px){
+  .info-bar{flex-direction:column;align-items:flex-start;}
+  .priceblock{flex-direction:row;align-items:center;justify-content:space-between;width:100%}
+  .addbtn span{display:none}
+}
+
+/* ═══════════════════════════════════════════
+   BEST SELLERS SECTION
+═══════════════════════════════════════════ */
+.section-divider{
+  width:100%;border:none;
+  border-top:1px solid var(--border);
+  margin:0;
+}
+.bs-section{
+  width:100%;position:relative;z-index:2;
+  padding:80px 24px 60px;
+  display:flex;flex-direction:column;
+  align-items:center;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 2px solid rgba(0, 0, 0, 0.8);
+}
+.sec-eyebrow{
+  font-size:.58rem;font-weight:500;
+  letter-spacing:.38em;text-transform:uppercase;
+  color:rgba(0,0,0,.4);margin-bottom:14px;
+  font-family:var(--fb);text-align:center;
+}
+.sec-title{
+  font-family:var(--fd);
+  font-size:clamp(2.2rem,5vw,4rem);
+  font-weight:300;line-height:1.05;
+  color:#000;letter-spacing:.02em;
+  text-align:center;
+}
+.sec-title em{font-style:italic;color:var(--accent);}
+.sec-divider{
+  width:36px;height:1px;
+  background:rgba(0,0,0,.22);
+  margin:18px auto;
+}
+.sec-sub{
+  font-family:var(--fd);font-style:italic;
+  font-size:.9rem;font-weight:300;
+  color:rgba(0,0,0,.45);text-align:center;
+  margin-bottom:52px;
+}
+.bs-cards{
+  display:flex;justify-content:center;
+  align-items:center;gap:40px;flex-wrap:wrap;
+  width:100%;
+}
+.bs-card-outer{display:flex;flex-direction:column;align-items:center;}
+.bs-card-wrap{
+  perspective:900px;width:220px;height:320px;
+  cursor:pointer;position:relative;
+}
+.bs-card{
+  width:100%;height:100%;border-radius:22px;
+  transform-style:preserve-3d;
+  transition:transform 0.12s ease;
+  position:relative;overflow:visible;
+}
+.bs-card-body{
+  width:100%;height:100%;border-radius:22px;
+  padding:18px 16px 22px;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  position:relative;overflow:visible;
+  border:1px solid rgba(255,255,255,.08);
+}
+.bs-card-1 .bs-card-body{background:linear-gradient(150deg,#2a0a00 0%,#7a2800 100%);}
+.bs-card-2 .bs-card-body{background:linear-gradient(150deg,#1a0030 0%,#6030a0 100%);}
+.bs-card-3 .bs-card-body{background:linear-gradient(150deg,#6e4b01 0%,#e6a00a 100%);}
+.bs-card::before{
+  content:'';position:absolute;top:0;left:-75%;
+  width:50%;height:100%;
+  background:linear-gradient(to right,transparent,rgba(255,255,255,.06),transparent);
+  transform:skewX(-20deg);border-radius:22px;
+  transition:left .5s ease;z-index:5;pointer-events:none;
+}
+.bs-card-wrap:hover .bs-card::before{left:130%;}
+.bs-card-num{
+  font-family:var(--fd);font-size:72px;font-weight:600;font-style:italic;
+  color:rgba(255,255,255,.07);
+  position:absolute;top:2px;left:10px;
+  line-height:1;user-select:none;
+}
+.bs-glow-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:rgba(255,255,255,.45);
+  position:absolute;top:16px;right:16px;
+  box-shadow:0 0 8px rgba(255,255,255,.35);
+}
+.bs-product-float{
+  position:absolute;top:20px;left:50%;
+  transform:translateX(-50%) translateZ(50px);
+  width:200px;height:180px;
+  display:flex;align-items:center;justify-content:center;
+  transition:transform .15s ease;
+  pointer-events:none;z-index:10;overflow:visible;
+}
+.bs-product-img{
+  width:100%;height:100%;object-fit:contain;
+  filter:drop-shadow(0 16px 32px rgba(0,0,0,.75));
+  transform:rotate(-10deg);
+  transition:transform .15s ease,filter .15s ease;
+}
+.bs-card-wrap:hover .bs-product-img{
+  filter:drop-shadow(0 24px 44px rgba(0,0,0,.9));
+  transform:rotate(-6deg) scale(1.8);
+}
+.fm-header{
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;
+  margin-bottom:48px;flex-wrap:wrap;gap:8px;
+  text-align:center;
+}
+.bs-card-info{position:relative;z-index:2;}
+.bs-badge{
+  display:inline-block;background:var(--accent);color:#fff;
+  font-family:var(--fb);font-size:.46rem;font-weight:500;
+  letter-spacing:.18em;text-transform:uppercase;
+  padding:3px 9px;border-radius:100px;margin-bottom:6px;
+}
+.bs-price-tag{
+  display:inline-block;background:rgba(0,0,0,.4);
+  border:1px solid rgba(255,255,255,.18);border-radius:8px;
+  padding:3px 10px;font-size:.68rem;font-weight:500;
+  color:#fff;margin-bottom:8px;letter-spacing:.04em;font-family:var(--fb);
+}
+.bs-product-name{
+  font-family:var(--fd);font-size:1.3rem;font-weight:400;
+  color:#fff;line-height:1.05;letter-spacing:.02em;
+}
+.bs-product-sub{
+  font-family:var(--fd);font-style:italic;
+  font-size:.76rem;font-weight:300;
+  color:rgba(255,255,255,.45);margin-top:3px;
+}
+
+/* ═══════════════════════════════════════════
+   FULL MENU SECTION
+═══════════════════════════════════════════ */
+.fm-section{
+  width:100%;position:relative;z-index:2;
+  padding:80px 52px 80px;
+  border-top:1px solid var(--border);
+  text-align:center;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.fm-header{
+  display:flex;align-items:flex-end;justify-content:space-between;
+  margin-bottom:48px;flex-wrap:wrap;gap:16px;
+}
+.fm-count{
+  font-size:.55rem;font-weight:300;letter-spacing:.18em;
+  color:rgba(0,0,0,.4);text-transform:uppercase;font-family:var(--fb);
+}
+.fm-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:20px;
+  border:1px solid var(--border);
+  border-radius:16px;overflow:hidden;
+}
+.fm-item{
+  display:flex;align-items:center;gap:16px;
+  padding:50px 22px;
+  background:rgba(0,0,0,.04);
+  border-bottom:1px solid var(--border);
+  border-right:1px solid var(--border);
+  transition:background .2s;cursor:pointer;
+}
+.fm-item:hover{background:rgba(0,0,0,.1);}
+.fm-img{
+  width:64px;height:64px;border-radius:50%;
+  object-fit:cover;flex-shrink:0;
+  border:1px solid var(--border);
+}
+.fm-info{flex:1;min-width:0;}
+.fm-name{
+  font-family:var(--fd);font-size:1rem;font-weight:400;
+  color:#000;line-height:1.1;margin-bottom:3px;
+}
+.fm-desc{
+  font-family:var(--fd);font-style:italic;
+  font-size:.72rem;font-weight:300;color:rgba(0,0,0,.5);
+  line-height:1.35;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.fm-tags{display:flex;gap:4px;margin-top:5px;flex-wrap:wrap;}
+.fm-tag{
+  font-size:.42rem;letter-spacing:.12em;font-weight:500;
+  color:rgba(0,0,0,.45);text-transform:uppercase;
+  border:1px solid var(--border);border-radius:100px;padding:1px 7px;
+}
+.fm-right{
+  display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex-shrink:0;
+}
+.fm-price{
+  font-family:var(--fd);font-size:1.1rem;font-weight:300;color:#000;
+}
+.fm-add{
+  display:flex;align-items:center;justify-content:center;
+  width:30px;height:30px;border-radius:50%;
+  background:var(--accent);border:none;color:#fff;
+  cursor:pointer;font-size:1rem;line-height:1;
+  transition:background .2s,transform .15s;
+  flex-shrink:0;
+}
+.fm-add:hover{background:#ff6b3d;transform:scale(1.1);}
+
+/* ═══════════════════════════════════════════
+   CONTACT SECTION
+═══════════════════════════════════════════ */
+.ct-section{
+  width:100%;position:relative;z-index:2;
+  padding:80px 52px 100px;
+  border-top:1px solid var(--border);
+}
+.ct-inner{
+  max-width:900px;margin:0 auto;
+  display:grid;grid-template-columns:1fr 1fr;gap:60px;
+  align-items:start;
+}
+.ct-info{margin-top:32px;display:flex;flex-direction:column;gap:20px;}
+.ct-row{display:flex;gap:14px;align-items:flex-start;}
+.ct-icon{
+  width:36px;height:36px;border-radius:90%;
+  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;color:rgba(0,0,0,.5);font-size:.9rem;
+}
+.ct-detail{font-family:var(--fd);}
+.ct-label{font-size:.65rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:rgba(0,0,0,.65);margin-bottom:2px;}
+.ct-val{font-size:1.1rem;font-weight:400;color:#000;line-height:1.5;}
+.ct-form{display:flex;flex-direction:column;gap:14px;margin-top:32px;}
+.ct-input,.ct-textarea{
+  width:100%;padding:12px 16px;
+  background:rgba(0,0,0,.10);
+  border:1px solid var(--border);border-radius:10px;
+  font-family:var(--fb);font-size:.78rem;font-weight:300;
+  color:#000;outline:none;
+  transition:border-color .2s,background .2s;
+  resize:none;
+}
+.ct-input::placeholder,.ct-textarea::placeholder{color:rgba(0,0,0,.35);}
+.ct-input:focus,.ct-textarea:focus{border-color:rgba(0,0,0,.35);background:rgba(0,0,0,.08);}
+.ct-textarea{height:110px;}
+.ct-submit{
+  display:flex;align-items:center;justify-content:center;gap:9px;
+  padding:12px 28px;border-radius:100px;
+  background:var(--accent);border:none;color:#fff;
+  font-family:var(--fb);font-size:.68rem;font-weight:400;
+  letter-spacing:.14em;text-transform:uppercase;cursor:pointer;
+  transition:background .25s,transform .15s,box-shadow .25s;
+  box-shadow:0 6px 24px rgba(232,82,42,.35);
+}
+.ct-submit:hover{background:#ff6b3d;transform:translateY(-1px);box-shadow:0 10px 32px rgba(232,82,42,.55);}
+
+/* ═══════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════ */
+.site-footer{
+  position:relative;z-index:2;
+  border-top:1px solid var(--border);
+  padding:24px 52px;
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:12px;
+}
+.foot-copy{font-size:.55rem;font-weight:300;letter-spacing:.14em;color:rgba(0,0,0,.38);text-transform:uppercase;}
+.foot-links{display:flex;gap:20px;}
+.foot-links a{font-size:.55rem;font-weight:300;letter-spacing:.14em;color:rgba(0,0,0,.38);text-transform:uppercase;text-decoration:none;transition:color .2s;}
+.foot-links a:hover{color:#000;}
+
+/* Responsive new sections */
+@media(max-width:860px){
+  .fm-section,.ct-section{padding:60px 28px 60px;}
+  .ct-inner{grid-template-columns:1fr;gap:36px;}
+  .site-footer{padding:20px 28px;}
+}
+@media(max-width:680px){
+  .bs-section{padding:60px 18px 50px;}
+  .bs-cards{gap:20px;}
+  .bs-card-wrap{width:180px;height:280px;}
+  .bs-product-float{width:160px;height:150px;top:18px;}
+  .fm-section,.ct-section{padding:50px 18px 50px;}
+  .fm-grid{grid-template-columns:1fr;}
+  .site-footer{padding:16px 18px;flex-direction:column;align-items:flex-start;}
+}
+/* ── CURSOR ── */
+body { cursor: none; }
+#pm-dot {
+  width: 8px; height: 8px;
+  background: #0c0c0c;
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+}
+#pm-ring {
+  width: 32px; height: 32px;
+  border: 1.5px solid #0c0c0c;
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s, height 0.3s;
+}
+.c-item img{
+  margin-bottom:-1%;
+}
+</style>
+</head>
+<body>
+<div id="pm-dot"></div>
+<div id="pm-ring"></div>
+
+<!-- FLOATING PARTICLES -->
+<div class="floats">
+  <span class="fi" style="left:4%;animation-delay:0s;animation-duration:16s;">🍓</span>
+  <span class="fi" style="left:12%;animation-delay:3s;animation-duration:13s;">🌹</span>
+  <span class="fi" style="left:22%;animation-delay:6s;animation-duration:18s;">🍒</span>
+  <span class="fi" style="left:35%;animation-delay:1.5s;animation-duration:14s;">🤍</span>
+  <span class="fi" style="left:48%;animation-delay:8s;animation-duration:17s;">🌸</span>
+  <span class="fi" style="left:60%;animation-delay:4s;animation-duration:15s;">🍓</span>
+  <span class="fi" style="left:72%;animation-delay:9s;animation-duration:19s;">🌹</span>
+  <span class="fi" style="left:83%;animation-delay:2s;animation-duration:12s;">🍒</span>
+</div>
+
+<!-- SIDE BRAND -->
+<div class="side-brand">Max Collection · Artisan Series</div>
+
+<!-- NAV DRAWER -->
+<div class="overlay" id="overlay"></div>
+<nav class="nav-drawer" id="navDrawer">
+  <div class="drawer-logo">Max Scoop</div>
+  <div class="drawer-sub">Artisan Collection</div>
+  <div class="drawer-nav">
+    <a href="#home">Our Menu <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></a>
+    <a href="#bestsellers">Today's Specials <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></a>
+    <a href="#fullmenu">Full Menu <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></a>
+    <a href="#contact">Contact <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></a>
+    <a href="#">Gift Cards <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></a>
+    <a href="#">About Us <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></a>
+  </div>
+  <div class="drawer-footer">Follow us</div>
+  <div class="drawer-social">
+    <a href="#">Instagram</a>
+    <a href="#">Facebook</a>
+    <a href="#">TikTok</a>
+  </div>
+</nav>
+
+<!-- HEADER -->
+<header>
+  <div class="h-left">
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="logo-wrap">
+      <span class="logo-main">Max Scoop</span>
+      <span class="logo-sub">Artisan Collection</span>
+    </div>
+  </div>
+  <div class="h-center hnav">
+    <a href="#home">Menu</a>
+    <a href="#bestsellers">Specials</a>
+    <a href="#fullmenu">Full Menu</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div class="h-right">
+    <button class="ibtn" id="favBtn" aria-label="Favorites">
+      <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+    </button>
+    <button class="ibtn" id="cartBtn" aria-label="Cart" style="position:relative">
+      <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+      <span class="badge" id="badge">0</span>
+    </button>
+  </div>
+</header>
+
+<main id="home">
+
+  <!-- ACTION ROW -->
+  <div class="actrow">
+    <button class="tbtn" id="toppingBtn">
+      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+      Add Topping
+    </button>
+    <button class="tbtn" id="saveFav">Save to Favorites ♡</button>
+  </div>
+
+  <!-- PRODUCT INFO BAR -->
+  <div class="info-bar">
+    <div class="pmeta">
+      <p class="pweight" id="wt">250 gr.</p>
+      <h1 class="pname" id="pname">Strawberry Tart</h1>
+      <p class="pdesc" id="pdesc">Wild strawberries in a buttery shortcrust with fresh vanilla cream</p>
+      <div class="reviews-row">
+        <span class="stars">★★★★★</span>
+        <span class="rcount" id="rcount">4.9 · 214 reviews</span>
+      </div>
+      <div class="ptags" id="ptags"></div>
+    </div>
+    <div class="sizeblock">      <p class="sizelbl">Select Size</p>
+      <div class="sizes">
+        <button class="sbtn" data-s="S">S</button>
+        <button class="sbtn on" data-s="M">M</button>
+        <button class="sbtn" data-s="L">L</button>
+      </div>
+    </div>
+    <div class="priceblock">
+      <span class="price" id="pr">$ 9.99</span>
+      <div class="buy-row">
+        <div class="qty">
+          <button class="qbtn" id="qMinus">−</button>
+          <span class="qval" id="qVal">1</span>
+          <button class="qbtn" id="qPlus">+</button>
+        </div>
+        <button class="addbtn" id="addBtn">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <span>Add to Cart</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ARC NAVIGATION -->
+  <div class="arc-section">
+    <svg class="arcsvg" viewBox="0 0 900 200" preserveAspectRatio="xMidYMid meet" id="arcSvg">
+      <g id="arcG"></g>
+      <circle class="adot" id="dot" r="5.5" cx="450" cy="198"/>
+    </svg>
+  </div>
+
+  <!-- PIE STAGE -->
+  <div class="stage">
+    <div class="glow" id="glow"></div>
+    <div class="carousel" id="carousel">
+      <button class="c-arrow left" id="arrowLeft"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+      <button class="c-arrow right" id="arrowRight"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
+    </div>
+  </div>
+
+  <!-- DELIVERY STRIP -->
+  <div class="dstrip">
+    <div class="dtag"><span>🚚</span> Free delivery over $30</div>
+    <div class="dtag"><span>⏱</span> Ready in 25 min</div>
+    <div class="dtag"><span>🌿</span> All-natural ingredients</div>
+  </div>
+
+  <!-- Mobile strip -->
+  <div class="mstrip" id="mstrip"></div>
+
+</main>
+
+<!-- TOPPING MODAL -->
+<div class="modal-overlay" id="toppingModal">
+  <div class="modal">
+    <div class="modal-title">Add a Topping</div>
+    <div class="modal-sub">Select one or more · Each + $1.50</div>
+    <div class="toppings-grid">
+      <div class="topping-item" data-t="Whipped Cream"><span class="topping-emoji">🍦</span><div class="topping-info"><div class="topping-name">Whipped Cream</div><div class="topping-price">+ $1.50</div></div></div>
+      <div class="topping-item" data-t="Caramel Drizzle"><span class="topping-emoji">🍯</span><div class="topping-info"><div class="topping-name">Caramel Drizzle</div><div class="topping-price">+ $1.50</div></div></div>
+      <div class="topping-item" data-t="Crushed Almonds"><span class="topping-emoji">🥜</span><div class="topping-info"><div class="topping-name">Crushed Almonds</div><div class="topping-price">+ $1.50</div></div></div>
+      <div class="topping-item" data-t="Berry Compote"><span class="topping-emoji">🫐</span><div class="topping-info"><div class="topping-name">Berry Compote</div><div class="topping-price">+ $1.50</div></div></div>
+      <div class="topping-item" data-t="Chocolate Shavings"><span class="topping-emoji">🍫</span><div class="topping-info"><div class="topping-name">Chocolate Shavings</div><div class="topping-price">+ $1.50</div></div></div>
+      <div class="topping-item" data-t="Vanilla Ice Cream"><span class="topping-emoji">🍨</span><div class="topping-info"><div class="topping-name">Vanilla Ice Cream</div><div class="topping-price">+ $2.00</div></div></div>
+    </div>
+    <button class="modal-close" id="modalClose">Done</button>
+  </div>
+</div>
+
+
+
+<div class="toast" id="toast"><span class="toast-dot"></span><span id="toastMsg">Added!</span></div>
+
+<script>
+// ─────────────────────────────────────────────
+//  DATA
+// ─────────────────────────────────────────────
+const PIES = [
+  { name:'Strawberry Tart',   img:'pie11.png',  wt:'250 gr.', price:{S:7.99,M:9.99,L:12.99},  bg:'#163827', bgImg:'image1.jpg', glow:'rgba(210,55,55,.28)',   desc:'Wild strawberries in a buttery shortcrust with fresh vanilla cream', tags:['🌾 Gluten Free','✋ Handmade','🍓 Fresh Fruit'], reviews:'4.9 · 214 reviews' },
+  { name:'Cherry Delight',    img:'pie12.png', wt:'280 gr.', price:{S:8.49,M:10.99,L:13.99}, bg:'#2a1228', bgImg:'image2.jpg', glow:'rgba(170,35,90,.28)',   desc:'Tart cherries slow-cooked in brown sugar with a flaky almond crust', tags:['✋ Handmade','🍒 Seasonal','🥛 Dairy Free'], reviews:'4.8 · 189 reviews' },
+  { name:'Blueberry Cloud',   img:'pie13.png',  wt:'260 gr.', price:{S:8.99,M:11.49,L:14.49}, bg:'#151733', bgImg:'image3.jpg', glow:'rgba(70,70,200,.28)',   desc:'Plump wild blueberries folded into lemon zest custard on a crisp base', tags:['🫐 Antioxidant','✋ Handmade','🌿 Vegan'], reviews:'4.9 · 302 reviews' },
+  { name:'Lemon Zest Pie',    img:'pie14.png',  wt:'230 gr.', price:{S:7.49,M:9.49,L:11.99},  bg:'#282408', bgImg:'image4.jpg', glow:'rgba(210,190,35,.24)', desc:'Sun-ripened lemons whipped into a silky curd with a graham cracker shell', tags:['🍋 Citrus','✋ Handmade','🌾 Gluten Free'], reviews:'4.7 · 156 reviews' },
+  { name:'Foxberry Dream',    img:'pie15.png',  wt:'270 gr.', price:{S:9.49,M:12.49,L:15.99}, bg:'#281408', bgImg:'image5.jpg', glow:'rgba(210,100,25,.28)', desc:'Rare foxberries sourced locally, stewed with cinnamon and cardamom spice', tags:['🍊 Exotic','✋ Handmade','⭐ Best Seller'], reviews:'5.0 · 98 reviews' },
+  { name:'Chocolate Noir',    img:'pie16.png',  wt:'240 gr.', price:{S:8.99,M:11.99,L:14.99}, bg:'#16161e', bgImg:'image6.jpg', glow:'rgba(90,50,130,.28)',  desc:'Deep forest blackberries in a dark cocoa crust with smoked vanilla', tags:['🍇 Bold','✋ Handmade','🌿 Organic'], reviews:'4.8 · 241 reviews' },
+  { name:'Raspberry Kiss',    img:'pie17.png', wt:'255 gr.', price:{S:8.29,M:10.79,L:13.49}, bg:'#280f18', bgImg:'image7.jpg', glow:'rgba(195,45,95,.28)',  desc:'Garden raspberries layered with rose water cream in a almond pastry shell', tags:['🩷 Romantic','✋ Handmade','🌹 Seasonal'], reviews:'4.9 · 177 reviews' },
+];
+const IDS = ['strawberry','cherry','peach','lemon','blackberry','chocolate','orange'];
+
+let cur=0, size='M', cart=0, qty=1, busy=false;
+let favs=new Set();
+let selectedToppings=new Set();
+
+// DOM
+const pname    = document.getElementById('pname');
+const wt       = document.getElementById('wt');
+const pr       = document.getElementById('pr');
+const pdesc    = document.getElementById('pdesc');
+const ptags    = document.getElementById('ptags');
+const rcount   = document.getElementById('rcount');
+const glow     = document.getElementById('glow');
+const arcG     = document.getElementById('arcG');
+const dot      = document.getElementById('dot');
+const badge    = document.getElementById('badge');
+const addBtn   = document.getElementById('addBtn');
+const toast    = document.getElementById('toast');
+const toastMsg = document.getElementById('toastMsg');
+const mstrip   = document.getElementById('mstrip');
+const saveFav  = document.getElementById('saveFav');
+const favBtn   = document.getElementById('favBtn');
+const cartBtn  = document.getElementById('cartBtn');
+const carousel = document.getElementById('carousel');
+const arrowL   = document.getElementById('arrowLeft');
+const arrowR   = document.getElementById('arrowRight');
+const qVal     = document.getElementById('qVal');
+const qMinus   = document.getElementById('qMinus');
+const qPlus    = document.getElementById('qPlus');
+const hamburger= document.getElementById('hamburger');
+const navDrawer= document.getElementById('navDrawer');
+const overlay  = document.getElementById('overlay');
+const toppingBtn   = document.getElementById('toppingBtn');
+const toppingModal = document.getElementById('toppingModal');
+const modalClose   = document.getElementById('modalClose');
+
+// ─────────────────────────────────────────────
+//  CAROUSEL BUILD
+// ─────────────────────────────────────────────
+const cItems=[];
+PIES.forEach((p,i)=>{
+  const div=document.createElement('div');
+  div.className='c-item';
+  const img=document.createElement('img');
+  img.src=p.img;
+  img.alt=p.name;
+  img.style.cssText='width:min(580px,85vw);height:auto;object-fit:contain;border-radius:0;display:block;filter:drop-shadow(0 24px 40px rgba(0,0,0,.45));transform:translateY(80px);';
+  div.appendChild(img);
+  div.addEventListener('click',()=>{ if(i!==cur) select(i); });
+  carousel.appendChild(div);
+  cItems.push({div,img});
+});
+
+function positionCarousel(active){
+  cItems.forEach(({div},i)=>{
+    const offset=i-active;
+    const cls=offset>=0?`pos-${Math.min(offset,3)}`:`pos--${Math.min(Math.abs(offset),3)}`;
+    div.className='c-item '+cls;
+  });
+}
+
+// ─────────────────────────────────────────────
+//  ARC
+// ─────────────────────────────────────────────
+const ARC={cx:450,cy:460,r:380,rd:336,s:222,e:318};
+const d2r=d=>d*Math.PI/180;
+function arcAngle(i){return ARC.s+(i/(PIES.length-1))*(ARC.e-ARC.s);}
+function arcPt(a,r){return{x:ARC.cx+r*Math.cos(d2r(a)),y:ARC.cy+r*Math.sin(d2r(a))};}
+
+function buildArc(){
+  arcG.innerHTML='';
+  PIES.forEach((p,i)=>{
+    const a=arcAngle(i),pt=arcPt(a,ARC.r);
+    const g=document.createElementNS('http://www.w3.org/2000/svg','g');
+    g.setAttribute('transform',`rotate(${a+90},${pt.x},${pt.y})`);
+
+    const el=document.createElementNS('http://www.w3.org/2000/svg','text');
+    el.setAttribute('x',pt.x);el.setAttribute('y',pt.y);
+    el.setAttribute('text-anchor','middle');el.setAttribute('dominant-baseline','middle');
+    el.setAttribute('class',i===0?'albl on':'albl');
+    el.setAttribute('fill','#000');
+    el.textContent=IDS[i].toUpperCase();
+    el.addEventListener('click',()=>select(i));
+
+    // golden underline line
+    const w=IDS[i].length*6.2;
+    const line=document.createElementNS('http://www.w3.org/2000/svg','line');
+    line.setAttribute('x1',pt.x-w/2);line.setAttribute('x2',pt.x+w/2);
+    line.setAttribute('y1',pt.y+9);line.setAttribute('y2',pt.y+9);
+    line.setAttribute('class',i===0?'albl-underline on':'albl-underline');
+
+    g.appendChild(el);
+    g.appendChild(line);
+    arcG.appendChild(g);
+  });
+  moveDot(0);
+}
+function moveDot(i){
+  const pt=arcPt(arcAngle(i),ARC.rd);
+  dot.setAttribute('cx',pt.x);dot.setAttribute('cy',pt.y);
+}
+function updateArc(i){
+  document.querySelectorAll('.albl').forEach((el,idx)=>el.classList.toggle('on',idx===i));
+  document.querySelectorAll('.albl-underline').forEach((el,idx)=>el.classList.toggle('on',idx===i));
+  moveDot(i);
+}
+
+// ─────────────────────────────────────────────
+//  MOBILE STRIP
+// ─────────────────────────────────────────────
+function buildStrip(){
+  mstrip.innerHTML='';
+  PIES.forEach((p,i)=>{
+    const btn=document.createElement('button');
+    btn.className='fpill'+(i===0?' on':'');
+    btn.textContent=IDS[i].toUpperCase();
+    btn.addEventListener('click',()=>select(i));
+    mstrip.appendChild(btn);
+  });
+}
+function updateStrip(i){
+  document.querySelectorAll('.fpill').forEach((el,idx)=>el.classList.toggle('on',idx===i));
+  const pills=document.querySelectorAll('.fpill');
+  if(pills[i]) pills[i].scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+}
+
+// ─────────────────────────────────────────────
+//  SELECT
+// ─────────────────────────────────────────────
+function select(i){
+  if(busy||i===cur)return;
+  busy=true;cur=i;size='M';qty=1;qVal.textContent='1';
+  document.querySelectorAll('.sbtn').forEach(b=>b.classList.toggle('on',b.dataset.s==='M'));
+  const p=PIES[i];
+  pname.classList.add('out');pr.classList.add('out');pdesc.classList.add('out');
+  document.body.style.background=`url('${p.bgImg}') center/cover no-repeat fixed`;
+  glow.style.background=p.glow;
+  positionCarousel(i);
+  updateArc(i);updateStrip(i);updateFavBtn();
+  setTimeout(()=>{
+    pname.textContent=p.name;
+    wt.textContent=p.wt;
+    pr.textContent=`$ ${p.price['M'].toFixed(2)}`;
+    pdesc.textContent=p.desc;
+    rcount.textContent=p.reviews;
+    // update tags
+    ptags.innerHTML='';
+    p.tags.forEach(t=>{
+      const s=document.createElement('span');
+      s.className='ptag';s.textContent=t;
+      ptags.appendChild(s);
+    });
+    pname.classList.remove('out');pr.classList.remove('out');pdesc.classList.remove('out');
+    setTimeout(()=>{busy=false;},350);
+  },420);
+}
+
+// ─────────────────────────────────────────────
+//  SIZE BUTTONS
+// ─────────────────────────────────────────────
+document.querySelectorAll('.sbtn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    if(btn.dataset.s===size)return;
+    size=btn.dataset.s;
+    document.querySelectorAll('.sbtn').forEach(b=>b.classList.remove('on'));
+    btn.classList.add('on');
+    pr.classList.add('out');
+    setTimeout(()=>{
+      pr.textContent=`$ ${PIES[cur].price[size].toFixed(2)}`;
+      pr.classList.remove('out');
+    },200);
+  });
+});
+
+// ─────────────────────────────────────────────
+//  QUANTITY
+// ─────────────────────────────────────────────
+qMinus.addEventListener('click',()=>{
+  if(qty<=1)return;
+  qty--;qVal.textContent=qty;
+});
+qPlus.addEventListener('click',()=>{
+  if(qty>=10)return;
+  qty++;qVal.textContent=qty;
+});
+
+// ─────────────────────────────────────────────
+//  CART
+// ─────────────────────────────────────────────
+addBtn.addEventListener('click',()=>{
+  cart+=qty;
+  badge.textContent=cart;
+  badge.classList.add('visible');
+  badge.classList.add('pop');
+  setTimeout(()=>badge.classList.remove('pop'),300);
+  const toppingList=selectedToppings.size>0?` + ${[...selectedToppings].join(', ')}`:'';
+  showToast(`${qty}× ${PIES[cur].name} (${size})${toppingList} added!`);
+  qty=1;qVal.textContent='1';
+});
+cartBtn.addEventListener('click',()=>{
+  showToast(cart===0?'Your cart is empty':`Cart: ${cart} item${cart>1?'s':''}`);
+});
+
+// ─────────────────────────────────────────────
+//  FAVORITES
+// ─────────────────────────────────────────────
+function updateFavBtn(){
+  const isFav=favs.has(cur);
+  favBtn.style.color=isFav?'#e8522a':'';
+  saveFav.textContent=isFav?'Saved to Favorites ♥':'Save to Favorites ♡';
+}
+favBtn.addEventListener('click',()=>{
+  favs.has(cur)?favs.delete(cur):favs.add(cur);
+  showToast(favs.has(cur)?`${PIES[cur].name} saved!`:'Removed from favorites');
+  updateFavBtn();
+});
+saveFav.addEventListener('click',()=>{
+  favs.has(cur)?favs.delete(cur):favs.add(cur);
+  showToast(favs.has(cur)?`${PIES[cur].name} saved!`:'Removed from favorites');
+  updateFavBtn();
+});
+
+// ─────────────────────────────────────────────
+//  HAMBURGER MENU
+// ─────────────────────────────────────────────
+function openDrawer(){
+  navDrawer.classList.add('open');
+  overlay.classList.add('show');
+  hamburger.classList.add('open');
+}
+function closeDrawer(){
+  navDrawer.classList.remove('open');
+  overlay.classList.remove('show');
+  hamburger.classList.remove('open');
+}
+hamburger.addEventListener('click',()=>{
+  navDrawer.classList.contains('open')?closeDrawer():openDrawer();
+});
+overlay.addEventListener('click',closeDrawer);
+
+// ─────────────────────────────────────────────
+//  TOPPING MODAL
+// ─────────────────────────────────────────────
+toppingBtn.addEventListener('click',()=>{
+  toppingModal.classList.add('show');
+});
+modalClose.addEventListener('click',()=>{
+  toppingModal.classList.remove('show');
+  if(selectedToppings.size>0){
+    showToast(`Toppings added: ${[...selectedToppings].join(', ')}`);
+  }
+});
+toppingModal.addEventListener('click',e=>{
+  if(e.target===toppingModal) toppingModal.classList.remove('show');
+});
+document.querySelectorAll('.topping-item').forEach(item=>{
+  item.addEventListener('click',()=>{
+    const t=item.dataset.t;
+    if(selectedToppings.has(t)){
+      selectedToppings.delete(t);
+      item.classList.remove('selected');
+    } else {
+      selectedToppings.add(t);
+      item.classList.add('selected');
+    }
+  });
+});
+
+// ─────────────────────────────────────────────
+//  TOAST
+// ─────────────────────────────────────────────
+let toastTimer;
+function showToast(msg){
+  toastMsg.textContent=msg;
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>toast.classList.remove('show'),2800);
+}
+
+// ─────────────────────────────────────────────
+//  KEYBOARD / WHEEL / SWIPE
+// ─────────────────────────────────────────────
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key==='ArrowDown') select((cur+1)%PIES.length);
+  if(e.key==='ArrowLeft' ||e.key==='ArrowUp')   select((cur-1+PIES.length)%PIES.length);
+  if(e.key==='Escape'){closeDrawer();toppingModal.classList.remove('show');}
+});
+let wcd=false;
+let tx=0;
+const stageEl=document.getElementById('carousel');
+stageEl.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;},{passive:true});
+stageEl.addEventListener('touchend',e=>{
+  const dx=e.changedTouches[0].clientX-tx;
+  if(Math.abs(dx)<45)return;
+  if(dx<0) select((cur+1)%PIES.length);
+  else     select((cur-1+PIES.length)%PIES.length);
+});
+
+// ─────────────────────────────────────────────
+//  ARROWS
+// ─────────────────────────────────────────────
+arrowL.addEventListener('click',()=>select((cur-1+PIES.length)%PIES.length));
+arrowR.addEventListener('click',()=>select((cur+1)%PIES.length));
+// ── PRELOAD BACKGROUND IMAGES ──
+PIES.forEach(p => {
+  const img = new Image();
+  img.src = p.bgImg;
+});
+
+// ─────────────────────────────────────────────
+//  INIT
+// ─────────────────────────────────────────────
+function init(){
+  buildArc();buildStrip();
+  positionCarousel(0);
+  const p=PIES[0];
+  document.body.style.background=`url('${p.bgImg}') center/cover no-repeat fixed`;
+  glow.style.background=p.glow;
+  pname.textContent=p.name;
+  wt.textContent=p.wt;
+  pr.textContent=`$ ${p.price['M'].toFixed(2)}`;
+  pdesc.textContent=p.desc;
+  rcount.textContent=p.reviews;
+  ptags.innerHTML='';
+  p.tags.forEach(t=>{
+    const s=document.createElement('span');
+    s.className='ptag';s.textContent=t;
+    ptags.appendChild(s);
+  });
+}
+init();
+</script>
+<!-- ═══════════════════════════════════════════
+     BEST SELLERS SECTION
+═══════════════════════════════════════════ -->
+<section class="bs-section" id="bestsellers">
+  <p class="sec-eyebrow">Most Loved</p>
+  <h2 class="sec-title fade-in">Our <em>Best Sellers</em></h2>
+  <div class="sec-divider"></div>
+  <p class="sec-sub fade-in">Handcrafted favourites, loved by thousands</p>
+
+  <div class="bs-cards fade-in">
+
+    <!-- Card 1 -->
+    <div class="bs-card-outer">
+      <div class="bs-card-wrap" data-bs="1">
+        <div class="bs-card bs-card-1">
+          <div class="bs-card-body">
+            <span class="bs-card-num">01</span>
+            <div class="bs-glow-dot"></div>
+            <div class="bs-product-float">
+              <img src="product1.png" alt="Chocolate Noir" class="bs-product-img"/>
+            </div>
+            <div class="bs-card-info">
+              <span class="bs-badge">Best Seller</span>
+              <div class="bs-price-tag">from $7.99</div>
+              <div class="bs-product-name">Strawberry Tart</div>
+              <div class="bs-product-sub">Wild berry & vanilla cream</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="bs-card-outer">
+      <div class="bs-card-wrap" data-bs="2">
+        <div class="bs-card bs-card-2">
+          <div class="bs-card-body">
+            <span class="bs-card-num">02</span>
+            <div class="bs-glow-dot"></div>
+            <div class="bs-product-float">
+              <img src="product2.png" alt="Blueberry Cloud" class="bs-product-img"/>
+            </div>
+            <div class="bs-card-info">
+              <span class="bs-badge">Fan Favourite</span>
+              <div class="bs-price-tag">from $8.99</div>
+              <div class="bs-product-name">Blueberry Cloud</div>
+              <div class="bs-product-sub">Lemon zest custard</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="bs-card-outer">
+      <div class="bs-card-wrap" data-bs="3">
+        <div class="bs-card bs-card-3">
+          <div class="bs-card-body">
+            <span class="bs-card-num">03</span>
+            <div class="bs-glow-dot"></div>
+            <div class="bs-product-float">
+              <img src="product3.png" alt="Foxberry Dream" class="bs-product-img"/>
+            </div>
+            <div class="bs-card-info">
+              <span class="bs-badge">Chef's Pick</span>
+              <div class="bs-price-tag">from $9.49</div>
+              <div class="bs-product-name">Orange Dream</div>
+              <div class="bs-product-sub">Cinnamon & cardamom spice</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     FULL MENU SECTION
+═══════════════════════════════════════════ -->
+<section class="fm-section" id="fullmenu">
+  <div class="fm-header">
+  <p class="sec-eyebrow" style="text-align:center;width:100%;">Complete Collection</p>
+  <h2 class="sec-title" style="font-size:clamp(1.8rem,4vw,3rem);text-align:center;width:100%;">Full <em>Menu</em></h2>
+</div>
+  <div class="fm-grid fade-in">
+    <div class="fm-item">
+      <img class="fm-img" src="menu1.jpg" alt="Strawberry Tart" loading="lazy"/>
+      <div class="fm-info">
+        <div class="fm-name">Strawberry Tart</div>
+        <div class="fm-desc">Wild strawberries in a buttery shortcrust with vanilla cream</div>
+        <div class="fm-tags"><span class="fm-tag">🌾 Gluten Free</span><span class="fm-tag">✋ Handmade</span></div>
+      </div>
+      <div class="fm-right">
+        <span class="fm-price">$9.99</span>
+        <button class="fm-add" onclick="showToast('Strawberry Tart added!')">+</button>
+      </div>
+    </div>
+    <div class="fm-item">
+      <img class="fm-img" src="menu2.jpg" alt="Cherry Delight" loading="lazy"/>
+      <div class="fm-info">
+        <div class="fm-name">Cherry Delight</div>
+        <div class="fm-desc">Tart cherries in brown sugar with a flaky almond crust</div>
+        <div class="fm-tags"><span class="fm-tag">✋ Handmade</span><span class="fm-tag">🍒 Seasonal</span></div>
+      </div>
+      <div class="fm-right">
+        <span class="fm-price">$10.99</span>
+        <button class="fm-add" onclick="showToast('Cherry Delight added!')">+</button>
+      </div>
+    </div>
+    <div class="fm-item">
+      <img class="fm-img" src="menu3.jpg" alt="Blueberry Cloud" loading="lazy"/>
+      <div class="fm-info">
+        <div class="fm-name">Blueberry Cloud</div>
+        <div class="fm-desc">Wild blueberries folded into lemon zest custard</div>
+        <div class="fm-tags"><span class="fm-tag">🫐 Antioxidant</span><span class="fm-tag">🌿 Vegan</span></div>
+      </div>
+      <div class="fm-right">
+        <span class="fm-price">$11.49</span>
+        <button class="fm-add" onclick="showToast('Blueberry Cloud added!')">+</button>
+      </div>
+    </div>
+    <div class="fm-item">
+      <img class="fm-img" src="menu4.jpg" alt="Lemon Zest Pie" loading="lazy"/>
+      <div class="fm-info">
+        <div class="fm-name">Lemon Zest Pie</div>
+        <div class="fm-desc">Sun-ripened lemons whipped into silky curd</div>
+        <div class="fm-tags"><span class="fm-tag">🍋 Citrus</span><span class="fm-tag">🌾 Gluten Free</span></div>
+      </div>
+      <div class="fm-right">
+        <span class="fm-price">$9.49</span>
+        <button class="fm-add" onclick="showToast('Lemon Zest Pie added!')">+</button>
+      </div>
+    </div>
+    <div class="fm-item">
+      <img class="fm-img" src="menu5.jpg" alt="Foxberry Dream" loading="lazy"/>
+      <div class="fm-info">
+        <div class="fm-name">Foxberry Dream</div>
+        <div class="fm-desc">Rare foxberries stewed with cinnamon and cardamom</div>
+        <div class="fm-tags"><span class="fm-tag">🍊 Exotic</span><span class="fm-tag">⭐ Best Seller</span></div>
+      </div>
+      <div class="fm-right">
+        <span class="fm-price">$12.49</span>
+        <button class="fm-add" onclick="showToast('Foxberry Dream added!')">+</button>
+      </div>
+    </div>
+    <div class="fm-item">
+      <img class="fm-img" src="menu6.jpg" alt="Blackberry Noir" loading="lazy"/>
+      <div class="fm-info">
+        <div class="fm-name">Blackberry Noir</div>
+        <div class="fm-desc">Deep forest blackberries in a dark cocoa crust</div>
+        <div class="fm-tags"><span class="fm-tag">🍇 Bold</span><span class="fm-tag">🌿 Organic</span></div>
+      </div>
+      <div class="fm-right">
+        <span class="fm-price">$11.99</span>
+        <button class="fm-add" onclick="showToast('Blackberry Noir added!')">+</button>
+      </div>
+    </div>
+    <div class="fm-item">
+      <img class="fm-img" src="menu7.jpg" alt="Raspberry Kiss" loading="lazy"/>
+      <div class="fm-info">
+        <div class="fm-name">Raspberry Kiss</div>
+        <div class="fm-desc">Garden raspberries with rose water cream</div>
+        <div class="fm-tags"><span class="fm-tag">🩷 Romantic</span><span class="fm-tag">🌹 Seasonal</span></div>
+      </div>
+      <div class="fm-right">
+        <span class="fm-price">$10.79</span>
+        <button class="fm-add" onclick="showToast('Raspberry Kiss added!')">+</button>
+      </div>
+    </div>
+    <div class="fm-item">
+  <img class="fm-img" src="menu8.jpg" alt="Strawberry Tart" loading="lazy"/>
+  <div class="fm-info">
+    <div class="fm-name">Strawberry Tart</div>
+    <div class="fm-desc">Wild strawberries in a buttery shortcrust with vanilla cream</div>
+    <div class="fm-tags"><span class="fm-tag">🌾 Gluten Free</span><span class="fm-tag">✋ Handmade</span></div>
+  </div>
+  <div class="fm-right">
+    <span class="fm-price">$9.99</span>
+    <button class="fm-add" onclick="showToast('Strawberry Tart added!')">+</button>
+  </div>
+</div>
+<div class="fm-item">
+  <img class="fm-img" src="menu9.jpg" alt="Strawberry Tart" loading="lazy"/>
+  <div class="fm-info">
+    <div class="fm-name">Strawberry Tart</div>
+    <div class="fm-desc">Wild strawberries in a buttery shortcrust with vanilla cream</div>
+    <div class="fm-tags"><span class="fm-tag">🌾 Gluten Free</span><span class="fm-tag">✋ Handmade</span></div>
+  </div>
+  <div class="fm-right">
+    <span class="fm-price">$9.99</span>
+    <button class="fm-add" onclick="showToast('Strawberry Tart added!')">+</button>
+  </div>
+</div>
+<div class="fm-item">
+  <img class="fm-img" src="menu10.jpg" alt="Strawberry Tart" loading="lazy"/>
+  <div class="fm-info">
+    <div class="fm-name">Strawberry Tart</div>
+    <div class="fm-desc">Wild strawberries in a buttery shortcrust with vanilla cream</div>
+    <div class="fm-tags"><span class="fm-tag">🌾 Gluten Free</span><span class="fm-tag">✋ Handmade</span></div>
+  </div>
+  <div class="fm-right">
+    <span class="fm-price">$9.99</span>
+    <button class="fm-add" onclick="showToast('Strawberry Tart added!')">+</button>
+  </div>
+</div>
+<div class="fm-item">
+  <img class="fm-img" src="menu11.jpg" alt="Strawberry Tart" loading="lazy"/>
+  <div class="fm-info">
+    <div class="fm-name">Strawberry Tart</div>
+    <div class="fm-desc">Wild strawberries in a buttery shortcrust with vanilla cream</div>
+    <div class="fm-tags"><span class="fm-tag">🌾 Gluten Free</span><span class="fm-tag">✋ Handmade</span></div>
+  </div>
+  <div class="fm-right">
+    <span class="fm-price">$9.99</span>
+    <button class="fm-add" onclick="showToast('Strawberry Tart added!')">+</button>
+  </div>
+</div>
+<div class="fm-item">
+  <img class="fm-img" src="menu12.jpg" alt="Strawberry Tart" loading="lazy"/>
+  <div class="fm-info">
+    <div class="fm-name">Strawberry Tart</div>
+    <div class="fm-desc">Wild strawberries in a buttery shortcrust with vanilla cream</div>
+    <div class="fm-tags"><span class="fm-tag">🌾 Gluten Free</span><span class="fm-tag">✋ Handmade</span></div>
+  </div>
+  <div class="fm-right">
+    <span class="fm-price">$9.99</span>
+    <button class="fm-add" onclick="showToast('Strawberry Tart added!')">+</button>
+  </div>
+</div>
+<div class="fm-item">
+  <img class="fm-img" src="menu13.jpg" alt="Strawberry Tart" loading="lazy"/>
+  <div class="fm-info">
+    <div class="fm-name">Strawberry Tart</div>
+    <div class="fm-desc">Wild strawberries in a buttery shortcrust with vanilla cream</div>
+    <div class="fm-tags"><span class="fm-tag">🌾 Gluten Free</span><span class="fm-tag">✋ Handmade</span></div>
+  </div>
+  <div class="fm-right">
+    <span class="fm-price">$9.99</span>
+    <button class="fm-add" onclick="showToast('Strawberry Tart added!')">+</button>
+  </div>
+</div>
+<div class="fm-item">
+  <img class="fm-img" src="menu14.jpg" alt="Strawberry Tart" loading="lazy"/>
+  <div class="fm-info">
+    <div class="fm-name">Strawberry Tart</div>
+    <div class="fm-desc">Wild strawberries in a buttery shortcrust with vanilla cream</div>
+    <div class="fm-tags"><span class="fm-tag">🌾 Gluten Free</span><span class="fm-tag">✋ Handmade</span></div>
+  </div>
+  <div class="fm-right">
+    <span class="fm-price">$9.99</span>
+    <button class="fm-add" onclick="showToast('Strawberry Tart added!')">+</button>
+  </div>
+</div>
+<div class="fm-item">
+  <img class="fm-img" src="menu15.jpg" alt="Strawberry Tart" loading="lazy"/>
+  <div class="fm-info">
+    <div class="fm-name">Strawberry Tart</div>
+    <div class="fm-desc">Wild strawberries in a buttery shortcrust with vanilla cream</div>
+    <div class="fm-tags"><span class="fm-tag">🌾 Gluten Free</span><span class="fm-tag">✋ Handmade</span></div>
+  </div>
+  <div class="fm-right">
+    <span class="fm-price">$9.99</span>
+    <button class="fm-add" onclick="showToast('Strawberry Tart added!')">+</button>
+  </div>
+</div>
+  </div>
+</section>
+
+
+
+<!-- ═══════════════════════════════════════════
+     CONTACT SECTION
+═══════════════════════════════════════════ -->
+<section class="ct-section" id="contact">
+  <div style="text-align:center;margin-bottom:52px;">
+    <p class="sec-eyebrow">Get in Touch</p>
+    <h2 class="sec-title" style="font-size:clamp(1.8rem,4vw,3rem);">Say <em>Hello</em></h2>
+    <div class="sec-divider"></div>
+    <p class="sec-sub">We'd love to hear from you</p>
+  </div>
+  <div class="ct-inner fade-in">
+    <div class="ct-left">
+      <h3 style="font-family:var(--fd);font-size:1.5rem;font-weight:300;color:#000;margin-bottom:4px;">Visit Us</h3>
+      <p style="font-family:var(--fd);font-style:italic;font-size:.85rem;color:rgba(0,0,0,.45);">Come taste the difference</p>
+      <div class="ct-info">
+        <div class="ct-row">
+          <div class="ct-icon">📍</div>
+          <div class="ct-detail">
+            <div class="ct-label">Address</div>
+            <div class="ct-val">42 Artisan Lane, Bakery District<br/>New York, NY 10001</div>
+          </div>
+        </div>
+        <div class="ct-row">
+          <div class="ct-icon">🕐</div>
+          <div class="ct-detail">
+            <div class="ct-label">Hours</div>
+            <div class="ct-val">Mon–Fri 8am – 8pm<br/>Sat–Sun 9am – 6pm</div>
+          </div>
+        </div>
+        <div class="ct-row">
+          <div class="ct-icon">📞</div>
+          <div class="ct-detail">
+            <div class="ct-label">Phone</div>
+            <div class="ct-val">+1 (212) 555-0198</div>
+          </div>
+        </div>
+        <div class="ct-row">
+          <div class="ct-icon">✉️</div>
+          <div class="ct-detail">
+            <div class="ct-label">Email</div>
+            <div class="ct-val"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="046c6168686b44746d6169656f61762a676b69">[email&#160;protected]</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ct-right">
+      <h3 style="font-family:var(--fd);font-size:1.5rem;font-weight:300;color:#000;margin-bottom:4px;">Send a Message</h3>
+      <p style="font-family:var(--fd);font-style:italic;font-size:.85rem;color:rgba(0,0,0,.45);">We reply within 24 hours</p>
+      <div class="ct-form fade-in">
+        <input class="ct-input" type="text" placeholder="Your name"/>
+        <input class="ct-input" type="email" placeholder="Email address"/>
+        <input class="ct-input" type="text" placeholder="Subject"/>
+        <textarea class="ct-textarea" placeholder="Your message..."></textarea>
+        <button class="ct-submit" onclick="showToast('Message sent! We\'ll be in touch soon.')">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          Send Message
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════ -->
+<footer class="site-footer">
+  <span class="foot-copy">© 2026 Piemaker · Artisan Pies · Baked fresh daily</span>
+  <div class="foot-links">
+    <a href="#home">Menu</a>
+    <a href="#bestsellers">Specials</a>
+    <a href="#fullmenu">Full Menu</a>
+    <a href="#contact">Contact</a>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// ── BEST SELLERS 3D TILT ──
+document.querySelectorAll('.bs-card-wrap').forEach(wrap => {
+  const card = wrap.querySelector('.bs-card');
+  wrap.addEventListener('mousemove', (e) => {
+    const rect = wrap.getBoundingClientRect();
+    const rotY = ((e.clientX - rect.left - rect.width/2) / (rect.width/2)) * 20;
+    const rotX = -((e.clientY - rect.top - rect.height/2) / (rect.height/2)) * 16;
+    card.style.transition = 'transform 0.1s ease';
+    card.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg) scale(1.03)`;
+  });
+  wrap.addEventListener('mouseleave', () => {
+    card.style.transition = 'transform 0.55s cubic-bezier(0.23,1,0.32,1)';
+    card.style.transform = 'rotateX(0deg) rotateY(0deg) scale(1)';
+  });
+  wrap.addEventListener('mouseenter', () => {
+    card.style.transition = 'transform 0.1s ease';
+  });
+});
+
+// ── SMOOTH SCROLL FOR NAV LINKS (close drawer too) ──
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth' });
+      closeDrawer();
+    }
+  });
+});
+// ── SCROLL FADE IN ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+// ── CURSOR ──
+const pmDot = document.getElementById('pm-dot');
+const pmRing = document.getElementById('pm-ring');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  pmDot.style.left = mx + 'px';
+  pmDot.style.top = my + 'px';
+});
+function animateRing() {
+  rx += (mx - rx) * 0.12;
+  ry += (my - ry) * 0.12;
+  pmRing.style.left = rx + 'px';
+  pmRing.style.top = ry + 'px';
+  requestAnimationFrame(animateRing);
+}
+animateRing();
+</script>
+</body>
+</html>
